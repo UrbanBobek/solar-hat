@@ -1,9 +1,11 @@
+/*
 int photo_res_1 = A0;
 int photo_res_2 = A1;
 short button_pin = 6;
 short H_bridge_1A = 9;
 short H_bridge_1B = 8;
 
+boolean turn_direction = true; // true - counter-clockwise, false - clockwise
 boolean turn_flag = false;
 
 unsigned long lastDebounceTime = 0;
@@ -11,7 +13,7 @@ unsigned long debounceDelay = 50;
 bool button_state = false;
 int last_button_reading = 0;
 
-int dead_band = 30;
+int counter = 0;
 
 void setup() {
   pinMode(photo_res_1, INPUT);
@@ -41,8 +43,6 @@ void loop() {
 
   int button_reading = digitalRead(button_pin);
   
-
-  
    // If the switch changed, due to noise or pressing:
   if (button_reading != last_button_reading) {
     // reset the debouncing timer
@@ -55,25 +55,18 @@ void loop() {
 
       if (button_state == HIGH) {
         turn_flag = !turn_flag;
+        counter++;
+        if(counter%2){
+          turn_direction = !turn_direction;  
+        }
       }
     }
   }
+
   last_button_reading = button_reading;
 
-
-  // Control logic
-  if(abs(pr_diff) > dead_band){
-    if(pr_diff > 0){
-      Serial.println("turn right");
-    }  
-    else{  
-      Serial.println("turn left");
-    }
-  }
-  
   if(turn_flag){
-
-    bool turn_direction = true;
+    
     
     // turn counter-clockwise
     if(turn_direction){
@@ -95,3 +88,4 @@ void loop() {
 
   
 }
+*/
